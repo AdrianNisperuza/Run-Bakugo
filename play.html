@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rescata - kirishima</title>
+    <title>Bakugo rescta a kirishima</title>
     <style>
         * {
             box-sizing: border-box;
@@ -64,7 +64,7 @@
 <body>
 
 <div id="game-card">
-    <h1>RESCATA A KIRISHIMA</h1>
+    <h1>Bakugo RUNNER</h1>
     <canvas id="gameCanvas" width="600" height="150"></canvas>
     <div class="instructions">
         <span class="key">Espacio</span> / <span class="key">Flecha Arriba</span> para saltar | 
@@ -78,26 +78,25 @@
 
     // === CARGA DE IMÁGENES ===
     const dinoImg = new Image();
-    dinoImg.src = 'run.png'; // Dino normal corriendo
+    dinoImg.src = 'bajo.png';
 
     const dinoJumpImg = new Image();
-    dinoJumpImg.src = 'jump.png'; // Dino saltando
+    dinoJumpImg.src = 'jump.png';
 
     const dinoDuckImg = new Image();
-    dinoDuckImg.src = 'bajo.png'; // Dino agachado
+    dinoDuckImg.src = 'Captura_de_pantalla_2026-09-05_113851-removebg-preview.png';
 
     const cactusImg = new Image();
-    cactusImg.src = 'Muro.jpg'; // Obstáculo terrestre
+    cactusImg.src = 'Muro.png';
 
     const birdImg = new Image();
-    birdImg.src = 'ave.png'; // Obstáculo aéreo
+    birdImg.src = 'ave.png';
 
     const bgImg = new Image();
-    bgImg.src = 'city.jpg'; // Fondo personalizable
+    bgImg.src = 'city.jpg';
 
-    // <--- AQUÍ COLOCAS TU IMAGEN DE CELEBRACIÓN DE LOS DOS DINOS
     const victoryImg = new Image();
-    victoryImg.src = 'win.png'; 
+    victoryImg.src = 'win.png';
 
     // === ESTADO DEL JUEGO ===
     let isPlaying = false;
@@ -249,14 +248,12 @@
         score++;
         gameSpeed += 0.001;
 
-        // Victoria
         if (score >= 2000) {
             gameWon = true;
         }
     }
 
     function draw() {
-        // Fondo
         if (bgImg.complete && bgImg.naturalWidth !== 0) {
             ctx.drawImage(bgImg, bgX1, 0, canvas.width, canvas.height);
             ctx.drawImage(bgImg, bgX2, 0, canvas.width, canvas.height);
@@ -265,9 +262,7 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        // Si NO ha ganado, se dibujan el Dino y los obstáculos del gameplay
         if (!gameWon) {
-            // Selección dinámica de la imagen del Dino
             let currentDinoImg = dinoImg;
             
             if (dino.isJumping && dinoJumpImg.complete && dinoJumpImg.naturalWidth !== 0) {
@@ -278,7 +273,6 @@
 
             ctx.drawImage(currentDinoImg, dino.x, dino.y, dino.width, dino.height);
 
-            // Obstáculos
             obstacles.forEach(obs => {
                 if (obs.type === 'high') {
                     ctx.drawImage(birdImg.complete && birdImg.naturalWidth !== 0 ? birdImg : cactusImg, obs.x, obs.y, obs.width, obs.height);
@@ -288,7 +282,6 @@
             });
         }
 
-        // Marcador
         ctx.fillStyle = '#ffffff';
         ctx.strokeStyle = '#000000';
         ctx.lineWidth = 3;
@@ -296,15 +289,12 @@
         ctx.strokeText(`SCORE: ${Math.floor(score)} / 2000`, 390, 25);
         ctx.fillText(`SCORE: ${Math.floor(score)} / 2000`, 390, 25);
 
-        // Estados de texto e pantalla final
         if (!isPlaying) {
             drawMessage('PRESIONA ESPACIO PARA EMPEZAR', '#ff4b2b');
         } else if (gameOver) {
             drawMessage('¡GAME OVER!', '#d32f2f', 'Presiona Espacio para Reiniciar');
         } else if (gameWon) {
-            // DIBUJAR IMAGEN GRANDE DE CELEBRACIÓN
             if (victoryImg.complete && victoryImg.naturalWidth !== 0) {
-                // Se dibuja centrada y ocupando la mayor parte del canvas (Anchura: 200px, Altura: 100px)
                 ctx.drawImage(victoryImg, (canvas.width / 2) - 100, 10, 200, 100);
             }
             drawMessage('¡¡¡¡ GANASTE !!!!', '#2e7d32', 'Presiona Espacio para Volver a Jugar');
@@ -313,7 +303,6 @@
 
     function drawMessage(title, color, subtitle = '') {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-        // Si ganó, movemos el banner del mensaje hacia abajo para dejar ver la imagen
         const bannerY = gameWon ? 110 : 25;
         const bannerHeight = gameWon ? 38 : 100;
         
